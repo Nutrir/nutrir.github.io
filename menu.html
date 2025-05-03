@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Carta del Restaurante</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      padding-top: 30px;
+    }
+    .logo {
+      max-width: 200px;
+      margin-bottom: 30px;
+    }
+    .plato {
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+    .descripcion {
+      font-size: 0.95rem;
+      color: #555;
+    }
+    .precio {
+      text-align: right;
+      font-weight: bold;
+    }
+    .menu-columna {
+      margin-bottom: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container text-center">
+    <img src="https://via.placeholder.com/200x100?text=LOGO" alt="Logo" class="logo mx-auto d-block">
+    <div class="row" id="menu-container">
+      <!-- Aquí se insertan los platos desde Google Sheets -->
+    </div>
+  </div>
+
+  <!-- Google Visualization API -->
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script>
+    google.charts.load('current', {'packages':['table']});
+    google.charts.setOnLoadCallback(drawMenu);
+
+    function drawMenu() {
+      const query = new google.visualization.Query('https://docs.google.com/spreadsheets/d/19aBA57GC13whXPhYmfd4e7C9mHgyic7L995elg5di2A/gviz/tq?sheet=menu');
+      query.send(handleQueryResponse);
+    }
+
+    function handleQueryResponse(response) {
+      if (response.isError()) {
+        document.getElementById("menu-container").innerHTML = "<p>Error al cargar el menú.</p>";
+        return;
+      }
+
+      const data = response.getDataTable();
+      const container = document.getElementById("menu-container");
+      const mitad = Math.ceil(data.getNumberOfRows() / 2);
+
+      const leftCol = document.createElement("div");
+      leftCol.className = "col-md-6 menu-columna";
+      const rightCol = document.createElement("div");
+      rightCol.className = "col-md-6 menu-columna";
+
+      for (let i = 0; i < data.getNumberOfRows(); i++) {
+        const plato = data.getValue(i, 0);
+        const descripcion = data.getValue(i, 1);
+        const precio = data.getValue(i, 2);
+
+        const itemHTML = `
+          <div class="d-flex justify-content-between">
+            <div>
+              <div class="plato">${plato}</div>
+              <div class="descripcion">${descripcion}</div>
+            </div>
+            <div class="precio">${precio}</div>
+          </div>
+          <hr>
+        `;
+
+        if (i < mitad) {
+          leftCol.innerHTML += itemHTML;
+        } else {
+          rightCol.innerHTML += itemHTML;
+        }
+      }
+
+      container.appendChild(leftCol);
+      container.appendChild(rightCol);
+    }
+  </script>
+
+</body>
+</html>
