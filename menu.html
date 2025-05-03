@@ -18,18 +18,21 @@
     .plato {
       font-weight: bold;
       font-size: 1.2rem;
+      text-align: left; /* Asegura alineación izquierda */
     }
     .descripcion {
       font-size: 0.95rem;
       color: #555;
+      text-align: left; /* Asegura alineación izquierda */
     }
     .precio {
       font-weight: bold;
       text-align: right;
-      min-width: 80px; /* Ancho fijo para el precio */
+      min-width: 80px;
     }
     .menu-columna {
       margin-bottom: 30px;
+      text-align: left; /* Alinea todo el contenido de la columna a la izquierda */
     }
     .menu-item {
       display: flex;
@@ -38,15 +41,23 @@
       margin-bottom: 10px;
     }
     .menu-text {
-      flex: 1; /* Ocupa todo el espacio disponible */
-      padding-right: 15px; /* Evita que el precio esté pegado al texto */
+      flex: 1;
+      padding-right: 15px;
+      text-align: left; /* Doble refuerzo para alinear a la izquierda */
+    }
+    .img-container {
+      text-align: center; /* Solo las imágenes centradas (opcional) */
+      margin-bottom: 20px;
     }
   </style>
 </head>
 <body>
 
-  <div class="container text-center">
-    <img src="panza.jpg" alt="Imagen de Panza" width="100"><img src="llena.jpg" alt="Imagen de Panza" width="100">
+  <div class="container"> <!-- Quitamos text-center -->
+    <div class="img-container"> <!-- Contenedor solo para imágenes (centradas) -->
+      <img src="panza.jpg" alt="Imagen de Panza" width="100">
+      <img src="llena.jpg" alt="Imagen de Panza" width="100">
+    </div>
     <div class="row" id="menu-container">
       <!-- Aquí se insertan los platos desde Google Sheets -->
     </div>
