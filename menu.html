@@ -24,11 +24,22 @@
       color: #555;
     }
     .precio {
-      text-align: right;
       font-weight: bold;
+      text-align: right;
+      min-width: 80px; /* Ancho fijo para el precio */
     }
     .menu-columna {
       margin-bottom: 30px;
+    }
+    .menu-item {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    .menu-text {
+      flex: 1; /* Ocupa todo el espacio disponible */
+      padding-right: 15px; /* Evita que el precio esté pegado al texto */
     }
   </style>
 </head>
@@ -73,8 +84,8 @@
         const precio = data.getValue(i, 2);
 
         const itemHTML = `
-          <div class="d-flex justify-content-between">
-            <div>
+          <div class="menu-item">
+            <div class="menu-text">
               <div class="plato">${plato}</div>
               <div class="descripcion">${descripcion}</div>
             </div>
